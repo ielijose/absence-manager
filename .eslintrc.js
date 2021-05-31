@@ -41,6 +41,16 @@ module.exports = {
     ],
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
   },
   settings: {
     react: {
@@ -54,5 +64,6 @@ module.exports = {
   },
   globals: {
     React: 'writable',
+    JSX: true,
   },
 };
