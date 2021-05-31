@@ -23,10 +23,10 @@ jobs:
       - name: Run linters
         uses: wearerequired/lint-action@v1
         with:
-          github_token: ${{ secrets.LINT_TOKEN }}
+          github_token: ${{ secrets.github_token }}
           git_name: 'Lint Action'
           git_email: 'ielijose@gmail.com'
-          commit_message: "Fix code style issues with ${linter}"
+          commit_message: 'Fix code style issues with ${linter}'
           # Enable linters
           eslint: true
           prettier: true
