@@ -1,23 +1,24 @@
-import { Absence } from 'src/interfaces/absence';
+import { Absence } from '@interfaces/absence';
+import { Meta } from '@interfaces/absenceResponse';
+import { Filters } from '@interfaces/filters';
 
-import { SET_ABSENCES, SET_LOADING } from './absences.types';
+import { SET_ABSENCES, SET_FILTERS, SET_LOADING } from './absences.types';
 
 interface AbsenceState {
   loading: boolean;
   error?: string;
   absences: Absence[];
-  filters: {
-    page?: number;
-    from?: Date;
-    to?: Date;
-    type?: string;
-  };
+  total: number;
+  meta: Meta;
+  filters: Filters;
 }
 
 const initialState: AbsenceState = {
   loading: true,
   error: null,
   absences: [],
+  total: null,
+  meta: null,
   filters: {
     page: 1,
     from: null,
@@ -39,7 +40,17 @@ const reducer = (state = initialState, action): AbsenceState => {
       return {
         ...state,
         loading: false,
-        absences: action.absences,
+        absences: action.payload.absences,
+        meta: action.payload.meta,
+      };
+
+    case SET_FILTERS:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          ...action.payload.filters,
+        },
       };
 
     default:
