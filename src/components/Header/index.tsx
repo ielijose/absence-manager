@@ -4,10 +4,11 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 
 const StyledHeader = styled.header`
-  background-color: #f97316;
+  background-color: #ff9419;
 
   color: white;
-  padding: 1rem 0.5rem;
+  padding: 1rem 2rem;
+  box-shadow: rgb(0 0 0 / 20%) 0px -3px 10px 6px;
 `;
 
 const StyledTitle = styled.a`
