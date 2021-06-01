@@ -56,6 +56,19 @@ export const Title = styled.p`
   }
 `;
 
+export const MemberImage = styled.img`
+  height: 2rem;
+  width: 2rem;
+  object-fit: cover;
+  margin-right: 1rem;
+  border-radius: 50%;
+`;
+
+export const Flex = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 // Loader
 
 const pulse = keyframes`
