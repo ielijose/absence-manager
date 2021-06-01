@@ -15,6 +15,7 @@ export const CardHead = styled.div`
   align-items: center;
   padding: 1.5rem 2rem;
 `;
+
 export const Table = styled.table`
   border-collapse: collapse;
   font-family: sans-serif;
@@ -30,10 +31,11 @@ export const THead = styled.thead`
 export const Th = styled.th`
   padding: 1rem 2rem;
 `;
+
 export const Td = styled.td`
   font-size: 0.875rem;
   font-size: 0.875rem;
-  padding: 1rem 2rem;
+  padding: 0.75rem 2rem;
 `;
 
 export const Tr = styled.tr`
@@ -64,12 +66,18 @@ export const MemberImage = styled.img`
   border-radius: 50%;
 `;
 
+/* Utils */
+
 export const Flex = styled.div`
   display: flex;
   align-items: center;
 `;
 
-// Loader
+export const Capitalize = styled.span`
+  text-transform: capitalize;
+`;
+
+/* Loader */
 
 const pulse = keyframes`
   50% {

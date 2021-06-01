@@ -1,13 +1,15 @@
+/* eslint-disable camelcase */
 import AbsenceStatus from '@components/AbsenceStatus';
 import Filters from '@components/Filters/Filters';
 import Pagination from '@components/Pagination';
 import { Absence } from '@interfaces/absence';
 import { fetchAbsences } from '@store/absences/absences.actions';
 import { RootState } from '@store/reducers';
+import { formatDate } from '@utils/dates';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Card, CardHead, Flex, MemberImage, Table, Td, Th, THead, Title, Tr } from './styles';
+import { Capitalize, Card, CardHead, Flex, MemberImage, Table, Td, Th, THead, Title, Tr } from './styles';
 import TableLoader from './TableLoader';
 
 const AbsencesTable = (): JSX.Element => {
@@ -17,6 +19,32 @@ const AbsencesTable = (): JSX.Element => {
   useEffect(() => {
     dispatch(fetchAbsences());
   }, [dispatch]);
+
+  const renderPeriod = ({ start_date, end_date }) => {
+    const startDate = formatDate(start_date);
+    const endDate = formatDate(end_date);
+
+    if (start_date === end_date) {
+      return startDate;
+    }
+
+    return `${startDate} - ${endDate}`;
+  };
+
+  const renderAbsenceType = (type) => {
+    let emojiType = null;
+    if (type === 'sickness') {
+      emojiType = '🤒';
+    } else if (type === 'vacation') {
+      emojiType = '🏖️';
+    }
+
+    return (
+      <Capitalize>
+        {type} {emojiType}
+      </Capitalize>
+    );
+  };
 
   const renderContent = () => {
     if (loading) {
@@ -32,8 +60,8 @@ const AbsencesTable = (): JSX.Element => {
               {absence.member.name}
             </Flex>
           </Td>
-          <Td>{absence.absence_type}</Td>
-          <Td>{absence.member.name}</Td>
+          <Td>{renderAbsenceType(absence.absence_type)}</Td>
+          <Td>{renderPeriod(absence)}</Td>
           <Td>{absence.member_note}</Td>
           <Td>
             <AbsenceStatus rejectedAt={absence.rejected_at} confirmedAt={absence.confirmed_at} />
