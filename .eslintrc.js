@@ -55,7 +55,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'import/no-extraneous-dependencies': [
       'error',
-      { devDependencies: ['jest.setup.ts', '**/*.test.tsx', '**/*.test.ts'] },
+      { devDependencies: ['jest.setup.ts', 'src/utils/test-utils.tsx', '**/*.test.tsx', '**/*.test.ts'] },
     ],
   },
   settings: {
