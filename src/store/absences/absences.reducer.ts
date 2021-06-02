@@ -2,7 +2,7 @@ import { Absence } from '@interfaces/absence';
 import { Meta } from '@interfaces/absenceResponse';
 import { Filters } from '@interfaces/filters';
 
-import { SET_ABSENCES, SET_FILTERS, SET_LOADING } from './absences.types';
+import { SET_ABSENCES, SET_ERROR, SET_FILTERS, SET_LOADING } from './absences.types';
 
 interface AbsenceState {
   loading: boolean;
@@ -21,9 +21,9 @@ const initialState: AbsenceState = {
   meta: null,
   filters: {
     page: 1,
-    from: null,
-    to: null,
-    type: null,
+    from: '',
+    to: '',
+    type: '',
   },
 };
 
@@ -40,6 +40,7 @@ const reducer = (state = initialState, action): AbsenceState => {
       return {
         ...state,
         loading: false,
+        error: null,
         absences: action.payload.absences,
         meta: action.payload.meta,
       };
@@ -53,6 +54,13 @@ const reducer = (state = initialState, action): AbsenceState => {
         },
       };
 
+    case SET_ERROR:
+      return {
+        ...state,
+        absences: [],
+        loading: false,
+        error: action.payload,
+      };
     default:
       return state;
   }

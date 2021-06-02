@@ -4,7 +4,7 @@ import httpClient from '@utils/httpClient';
 
 function tranformFilters(filters: Filters) {
   return Object.keys(filters)
-    .filter((key) => filters[key] !== null)
+    .filter((key) => filters[key] !== '')
     .map((key) => `${key}=${filters[key]}`)
     .join('&');
 }

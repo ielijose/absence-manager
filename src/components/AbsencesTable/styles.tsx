@@ -48,7 +48,7 @@ export const Title = styled.p`
   font-weight: 700;
   line-height: 1.25;
   color: #1f2937;
-
+  margin: 0;
   @media (min-width: 768px) {
     font-size: 1.125rem;
   }
@@ -64,17 +64,6 @@ export const MemberImage = styled.img`
   object-fit: cover;
   margin-right: 1rem;
   border-radius: 50%;
-`;
-
-/* Utils */
-
-export const Flex = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-export const Capitalize = styled.span`
-  text-transform: capitalize;
 `;
 
 /* Loader */

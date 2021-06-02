@@ -1,6 +1,6 @@
 export interface Filters {
   page?: number;
-  from?: Date;
-  to?: Date;
+  from?: string;
+  to?: string;
   type?: string;
 }

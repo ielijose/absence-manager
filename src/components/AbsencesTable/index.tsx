@@ -2,18 +2,22 @@
 import AbsenceStatus from '@components/AbsenceStatus';
 import Filters from '@components/Filters/Filters';
 import Pagination from '@components/Pagination';
+import { Capitalize } from '@components/shared/Capitalize';
+import { Flex } from '@components/shared/Flex';
 import { Absence } from '@interfaces/absence';
 import { fetchAbsences } from '@store/absences/absences.actions';
 import { RootState } from '@store/reducers';
-import { formatDate } from '@utils/dates';
+import { differenceInCalendarDays } from 'date-fns';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Capitalize, Card, CardHead, Flex, MemberImage, Table, Td, Th, THead, Title, Tr } from './styles';
+import EmptyList from './EmptyList';
+import ErrorMessage from './ErrorMessage';
+import { Card, CardHead, MemberImage, Table, Td, Th, THead, Title, Tr } from './styles';
 import TableLoader from './TableLoader';
 
 const AbsencesTable = (): JSX.Element => {
-  const { loading, absences } = useSelector((state: RootState) => state.absences);
+  const { loading, error, absences } = useSelector((state: RootState) => state.absences);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,14 +25,13 @@ const AbsencesTable = (): JSX.Element => {
   }, [dispatch]);
 
   const renderPeriod = ({ start_date, end_date }) => {
-    const startDate = formatDate(start_date);
-    const endDate = formatDate(end_date);
+    const startDate = new Date(start_date);
+    const endDate = new Date(end_date);
+    const period = differenceInCalendarDays(endDate, startDate) + 1;
 
-    if (start_date === end_date) {
-      return startDate;
-    }
+    const text = start_date === end_date ? 'day' : 'days';
 
-    return `${startDate} - ${endDate}`;
+    return `${period} ${text}`;
   };
 
   const renderAbsenceType = (type) => {
@@ -49,6 +52,25 @@ const AbsencesTable = (): JSX.Element => {
   const renderContent = () => {
     if (loading) {
       return <TableLoader />;
+    }
+
+    if (error) {
+      return (
+        <Tr>
+          <Td colSpan={6} align="center">
+            <ErrorMessage />
+          </Td>
+        </Tr>
+      );
+    }
+    if (absences.length === 0) {
+      return (
+        <Tr>
+          <Td colSpan={6} align="center">
+            <EmptyList />
+          </Td>
+        </Tr>
+      );
     }
 
     return absences.map((absence: Absence) => {
