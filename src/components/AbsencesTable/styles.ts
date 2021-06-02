@@ -58,6 +58,13 @@ export const Title = styled.p`
   }
 `;
 
+export const Subtitle = styled.span`
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #71717a;
+  margin-top: 0.25rem; ;
+`;
+
 export const MemberImage = styled.img`
   height: 2rem;
   width: 2rem;

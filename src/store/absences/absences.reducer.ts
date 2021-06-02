@@ -43,6 +43,7 @@ const reducer = (state = initialState, action): AbsenceState => {
         error: null,
         absences: action.payload.absences,
         meta: action.payload.meta,
+        total: action.payload.total,
       };
 
     case SET_FILTERS:

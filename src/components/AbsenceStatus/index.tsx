@@ -22,4 +22,4 @@ const AbsenceStatus: FC<AbsenceStatusProps> = ({ confirmedAt, rejectedAt }) => {
   return <Badge status={status}>{status}</Badge>;
 };
 
-export default AbsenceStatus;
+export default React.memo(AbsenceStatus);

@@ -16,10 +16,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import EmptyList from '../EmptyList';
 import ErrorMessage from '../ErrorMessage';
 import TableLoader from '../LoadingSkeleton';
-import { Card, CardHead, MemberImage, Table, Td, Th, THead, Title, Tr } from './styles';
+import { Card, CardHead, MemberImage, Subtitle, Table, Td, Th, THead, Title, Tr } from './styles';
 
 const AbsencesTable = (): JSX.Element => {
-  const { loading, error, absences } = useSelector((state: RootState) => state.absences);
+  const { loading, error, absences, total } = useSelector((state: RootState) => state.absences);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -96,7 +96,10 @@ const AbsencesTable = (): JSX.Element => {
   return (
     <Card>
       <CardHead>
-        <Title>Absences</Title>
+        <Flex direction="column">
+          <Title>Absences</Title>
+          <Subtitle>Total: {total}</Subtitle>
+        </Flex>
         <Filters />
       </CardHead>
       <Table>

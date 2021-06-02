@@ -20,13 +20,14 @@ export const fetchAbsences = (fromScratch = false) => {
       if (fromScratch) {
         filtersToApply.page = 1;
       }
-      const { data: absences, meta } = await searchAbsences(filters);
+      const { data: absences, meta, total } = await searchAbsences(filters);
 
       const action = {
         type: SET_ABSENCES,
         payload: {
           absences,
           meta,
+          total,
         },
       };
 

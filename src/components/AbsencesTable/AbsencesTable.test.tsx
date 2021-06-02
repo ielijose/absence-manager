@@ -11,7 +11,7 @@ describe('<AbsencesTable/>', () => {
         loading: false,
         error: null,
         absences: [],
-        total: 0,
+        total: 50,
         meta: null,
         filters: {
           page: 1,
@@ -27,5 +27,9 @@ describe('<AbsencesTable/>', () => {
 
   test('should render title', () => {
     component.getByText('Absences');
+  });
+
+  test('should render total', () => {
+    component.getByText('Total: 50');
   });
 });
