@@ -13,10 +13,10 @@ import React, { useEffect } from 'react';
 import ICalendarLink from 'react-icalendar-link';
 import { useDispatch, useSelector } from 'react-redux';
 
-import EmptyList from './EmptyList';
-import ErrorMessage from './ErrorMessage';
+import EmptyList from '../EmptyList';
+import ErrorMessage from '../ErrorMessage';
+import TableLoader from '../LoadingSkeleton';
 import { Card, CardHead, MemberImage, Table, Td, Th, THead, Title, Tr } from './styles';
-import TableLoader from './TableLoader';
 
 const AbsencesTable = (): JSX.Element => {
   const { loading, error, absences } = useSelector((state: RootState) => state.absences);
