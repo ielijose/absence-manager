@@ -1,5 +1,4 @@
-
-# Absence Manager 
+# Absence Manager
 
 ## Environment Variables
 
@@ -26,15 +25,15 @@ Go to the project directory
 Install dependencies
 
 ```bash
-  yarn 
+  yarn
 ```
- 
+
 Run dev mode
 
 ```bash
   yarn dev
 ```
-  
+
 ## Running Tests
 
 To run tests, run the following commands
@@ -42,9 +41,7 @@ To run tests, run the following commands
 ```bash
   yarn test
 ```
- 
+
 ## Authors
 
 - [@ielijose](https://www.github.com/ielijose)
-
-  
