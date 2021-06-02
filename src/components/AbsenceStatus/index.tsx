@@ -6,8 +6,8 @@ import { Badge } from './styles';
 const { rejected, requested, confirmed } = ABSENCE_STATUSES;
 
 type AbsenceStatusProps = {
-  rejectedAt: Date;
-  confirmedAt: Date;
+  rejectedAt: string;
+  confirmedAt: string;
 };
 
 const AbsenceStatus: FC<AbsenceStatusProps> = ({ confirmedAt, rejectedAt }) => {
