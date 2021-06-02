@@ -1,4 +1,4 @@
-import { setFilters } from '@store/absences/absences.actions';
+import { changePage } from '@store/absences/absences.actions';
 import { RootState } from '@store/reducers';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,10 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Item, Legend, List, PaginationContainer } from './styles';
 
 const Pagination = (): JSX.Element => {
-  const { loading, meta } = useSelector((state: RootState) => state.absences);
+  const { loading, error, meta } = useSelector((state: RootState) => state.absences);
   const dispatch = useDispatch();
 
-  if (loading) {
+  if (loading || !meta || error !== null) {
     return null;
   }
 
@@ -20,7 +20,7 @@ const Pagination = (): JSX.Element => {
   }
 
   const setPage = (toPage) => {
-    dispatch(setFilters({ page: toPage }));
+    dispatch(changePage(toPage));
   };
 
   const renderItems = () => {
@@ -52,4 +52,4 @@ const Pagination = (): JSX.Element => {
   );
 };
 
-export default Pagination;
+export default React.memo(Pagination);
