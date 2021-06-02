@@ -1,14 +1,16 @@
 /* eslint-disable camelcase */
 import AbsenceStatus from '@components/AbsenceStatus';
 import Filters from '@components/Filters/Filters';
+import Calendar from '@components/icons/Calendar';
 import Pagination from '@components/Pagination';
 import { Capitalize } from '@components/shared/Capitalize';
 import { Flex } from '@components/shared/Flex';
 import { Absence } from '@interfaces/absence';
 import { fetchAbsences } from '@store/absences/absences.actions';
 import { RootState } from '@store/reducers';
-import { differenceInCalendarDays } from 'date-fns';
+import { calculatePeriod, generateEventFilename, transformAbsenceToEvent } from '@utils/calendar';
 import React, { useEffect } from 'react';
+import ICalendarLink from 'react-icalendar-link';
 import { useDispatch, useSelector } from 'react-redux';
 
 import EmptyList from './EmptyList';
@@ -23,16 +25,6 @@ const AbsencesTable = (): JSX.Element => {
   useEffect(() => {
     dispatch(fetchAbsences());
   }, [dispatch]);
-
-  const renderPeriod = ({ start_date, end_date }) => {
-    const startDate = new Date(start_date);
-    const endDate = new Date(end_date);
-    const period = differenceInCalendarDays(endDate, startDate) + 1;
-
-    const text = start_date === end_date ? 'day' : 'days';
-
-    return `${period} ${text}`;
-  };
 
   const renderAbsenceType = (type) => {
     let emojiType = null;
@@ -57,7 +49,7 @@ const AbsencesTable = (): JSX.Element => {
     if (error) {
       return (
         <Tr>
-          <Td colSpan={6} align="center">
+          <Td colSpan={7} align="center">
             <ErrorMessage />
           </Td>
         </Tr>
@@ -66,7 +58,7 @@ const AbsencesTable = (): JSX.Element => {
     if (absences.length === 0) {
       return (
         <Tr>
-          <Td colSpan={6} align="center">
+          <Td colSpan={7} align="center">
             <EmptyList />
           </Td>
         </Tr>
@@ -74,6 +66,9 @@ const AbsencesTable = (): JSX.Element => {
     }
 
     return absences.map((absence: Absence) => {
+      const event = transformAbsenceToEvent(absence);
+      const filename = generateEventFilename(absence);
+
       return (
         <Tr key={absence.id}>
           <Td>
@@ -83,12 +78,17 @@ const AbsencesTable = (): JSX.Element => {
             </Flex>
           </Td>
           <Td>{renderAbsenceType(absence.absence_type)}</Td>
-          <Td>{renderPeriod(absence)}</Td>
+          <Td>{calculatePeriod(absence.start_date, absence.end_date)}</Td>
           <Td>{absence.member_note}</Td>
           <Td>
             <AbsenceStatus rejectedAt={absence.rejected_at} confirmedAt={absence.confirmed_at} />
           </Td>
           <Td>{absence.admitter_note}</Td>
+          <Td>
+            <ICalendarLink event={event} filename={filename}>
+              <Calendar />
+            </ICalendarLink>
+          </Td>
         </Tr>
       );
     });
@@ -108,6 +108,7 @@ const AbsencesTable = (): JSX.Element => {
             <Th>Member Note</Th>
             <Th>Status</Th>
             <Th>Admitter Note</Th>
+            <Th>Add to calendar</Th>
           </tr>
         </THead>
         <tbody>{renderContent()}</tbody>
